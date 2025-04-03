@@ -5,6 +5,13 @@ import { Book } from "./models/bookModel.js";
 
 const app = express();
 
+app.use(express.json());
+
+app.get('/',(request,response)=>{
+    console.log(request);
+    return response.status(234).send('Welcome to MERN Stack Tutorial')
+});
+
 app.post('/books', async(request,response)=>{
     try{
         if (
