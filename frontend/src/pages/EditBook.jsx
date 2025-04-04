@@ -1,33 +1,33 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import BackButton from '../components/BackButton';
 import Spinner from '../components/Spinner';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const EditBook = () => {
-  const [title, setTitle]=useState('');
-  const [author, setAuthor]=useState('');
-  const [publishYear, setPublishYear]=useState('');
-  const [loading, setLoading]=useState(false);
-  const navigate=useNavigate();
-  const {id}=useParams();
-  useEffect(()=>{
+  const [title, setTitle] = useState('');
+  const [author, setAuthor] = useState('');
+  const [publishYear, setPublishYear] = useState('');
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const { id } = useParams();
+  useEffect(() => {
     setLoading(true);
     axios.get(`http://localhost:5555/books/${id}`)
-      .then((response)=>{
+      .then((response) => {
         setAuthor(response.data.author);
         setPublishYear(response.data.publishYear);
         setTitle(response.data.title);
         setLoading(false);
       })
-      .catch((error)=>{
+      .catch((error) => {
         setLoading(false);
         alert('An error occurred. Please Check Console')
         console.log(error);
       });
-  },[])
-  const handleEditBook=()=>{
-    const data={
+  }, [])
+  const handleEditBook = () => {
+    const data = {
       title,
       author,
       publishYear,
@@ -35,11 +35,11 @@ const EditBook = () => {
     setLoading(true);
     axios
       .put(`http://localhost:5555/books/${id}`, data)
-      .then(()=>{
+      .then(() => {
         setLoading(false);
         navigate('/');
       })
-      .catch((error)=>{
+      .catch((error) => {
         setLoading(false);
         alert('An error happened. Please check console');
         console.log(error);
@@ -48,16 +48,16 @@ const EditBook = () => {
 
   return (
     <div className='p-4'>
-      <BackButton/>
+      <BackButton />
       <h1 className='text-3xl my-4'>Edit Book</h1>
-      {loading ? <Spinner/> : ""}
+      {loading ? <Spinner /> : ""}
       <div className='flex flex-col border-2 border-sky-400 rounded-xl w-[600px] p-4 mx-auto'>
         <div className='my-4'>
           <label className='text-xl mr-4 text-gray-500'>Title</label>
           <input
             type='text'
             value={title}
-            onChange={(e)=>setTitle(e.target.value)}
+            onChange={(e) => setTitle(e.target.value)}
             className='border-2 border-gray-500 px-4 py-2 w-full'
           />
         </div>
@@ -66,7 +66,7 @@ const EditBook = () => {
           <input
             type='text'
             value={author}
-            onChange={(e)=>setAuthor(e.target.value)}
+            onChange={(e) => setAuthor(e.target.value)}
             className='border-2 border-gray-500 px-4 py-2 w-full'
           />
         </div>
@@ -75,7 +75,7 @@ const EditBook = () => {
           <input
             type='text'
             value={publishYear}
-            onChange={(e)=>setPublishYear(e.target.value)}
+            onChange={(e) => setPublishYear(e.target.value)}
             className='border-2 border-gray-500 px-4 py-2 w-full'
           />
         </div>
