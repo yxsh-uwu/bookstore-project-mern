@@ -11,7 +11,7 @@ import BooksTable from '../components/home/BooksTable';
 const Home = () => {
     const [books, setBooks] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [showType, setShowType]=useState('table');
+    const [showType, setShowType] = useState('table');
     useEffect(() => {
         setLoading(true);
         axios
@@ -22,6 +22,7 @@ const Home = () => {
             })
             .catch((error) => {
                 console.log(error);
+                enqueueSnackbar("An error occurred", { variant: "error" })
                 setLoading(false);
             });
     }, []);
@@ -30,13 +31,13 @@ const Home = () => {
             <div className='flex justify-center items-center gap-x-4'>
                 <button
                     className='bg-sky-300 hover:bg-sky-600 px-4 py-1 rounded-lg'
-                    onClick={()=>setShowType('table')}
+                    onClick={() => setShowType('table')}
                 >
                     Table
                 </button>
                 <button
                     className='bg-sky-300 hover:bg-sky-600 px-4 py-1 rounded-lg'
-                    onClick={()=>setShowType('card')}
+                    onClick={() => setShowType('card')}
                 >
                     Card
                 </button>
@@ -48,7 +49,7 @@ const Home = () => {
                 </Link>
 
             </div>
-            {loading ? (<Spinner />) : showType==="table" ? (<BooksTable books={books} />) :(<BooksCard books={books}/>)}
+            {loading ? (<Spinner />) : showType === "table" ? (<BooksTable books={books} />) : (<BooksCard books={books} />)}
         </div>
     )
 }
